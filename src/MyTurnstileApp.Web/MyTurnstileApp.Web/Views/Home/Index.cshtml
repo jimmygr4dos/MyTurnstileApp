@@ -1,0 +1,44 @@
+﻿@model MyTurnstileApp.Web.Models.SubmissionViewModel
+
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<h2>Formulario de Prueba</h2>
+
+<form asp-action="Submit" method="post">
+    <div class="form-group">
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-2">
+        <!-- Añadir el callback para manejar el token de Turnstile -->
+        <div class="cf-turnstile" 
+             data-sitekey="@ViewData["SiteKey"]" 
+             data-size="compact" 
+             data-theme="light"
+             data-callback="onTurnstileSuccess">
+        </div>
+    </div>
+    <!-- Campo oculto para almacenar el token de Turnstile -->
+    <input type="hidden" asp-for="TurnstileResponse" />
+    <button type="submit" class="btn btn-primary">Enviar</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script>
+        // Función de callback para manejar el token de Turnstile
+        function onTurnstileSuccess(token) {
+            // Asigna el token al campo oculto
+            document.querySelector('input[name="TurnstileResponse"]').value = token;
+        }
+    </script>
+}
