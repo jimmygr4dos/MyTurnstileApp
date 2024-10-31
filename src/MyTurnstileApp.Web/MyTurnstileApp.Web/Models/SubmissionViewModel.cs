@@ -4,6 +4,12 @@ namespace MyTurnstileApp.Web.Models
 {
     public class SubmissionViewModel
     {
+        public SubmissionViewModel()
+        {
+            UserName = "Usuario1";
+            Email = "correo@correo.com";
+        }
+
         [Required(ErrorMessage = "El nombre de usuario es obligatorio.")]
         [Display(Name = "Nombre de Usuario")]
         public string UserName { get; set; }
@@ -14,5 +20,7 @@ namespace MyTurnstileApp.Web.Models
         public string Email { get; set; }
 
         public string TurnstileResponse { get; set; }
+
+        public string RecaptchaToken { get; set; }
     }
 }

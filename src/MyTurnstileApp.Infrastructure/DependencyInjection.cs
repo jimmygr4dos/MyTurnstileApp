@@ -9,6 +9,7 @@ namespace MyTurnstileApp.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddHttpClient<ITurnstileService, TurnstileService>();
+            services.AddTransient<ILoggerService, LoggerService>();
             return services;
         }
     }
